@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="container-fluid">
+    <div align="center">
+      <div class="row content">
+        <div class="col-sm-12">
+          <div class="well">
+            <img alt="Logo" class="img-in-class" disabled [src]="ImgLogo" style="cursor: pointer">
+            <br>
+            <button class="btn btn-box btn-lg" style="background-color: #213c5f; color: white" disabled>
+              สวัสดี {{PUser.userId}} แต้มปัจจุบันของคุณคือ
+              {{PUser.current}} แต้ม
+            </button>
+            <hr>
+            <div class="checkbox-container">
+              <div align="center">
+
+                <form name="form" #f="ngForm" novalidate>
+                  <div class="form-group" style="width: 70%">
+                    <br>
+                    <label class="p-text">เลือกแต้มที่ต้องการเติม</label>
+                    <div class="form-group has-feedback">
+                      <p><select class="btn btn-default btn-lg select" style="width: 250px"
+                                 [ngModel]="selectedDeviceObj"
+                                 (ngModelChange)="onChangeObj($event)" name="sel3">
+                        <option [ngValue]="i" *ngFor="let i of deviceObjects">{{i.name}} บาท {{i.description}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <hr>
+                    <button type="button" class="btn btn-lg" style="background-color: #253272; color: white"
+                            (click)="Confirm()">ตกลง
+                    </button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

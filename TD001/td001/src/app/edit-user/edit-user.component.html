@@ -1,0 +1,153 @@
+<body>
+<div class="container">
+  <div class="row" *ngFor="let user of users">
+    <div class="col-sm-12" *ngIf="user.id == currentUser.id">
+      <div class="well">
+        <div class="media">
+
+          <div class="col-xs-12 col-sm-4">
+            <div align="center">
+
+              <div class="thumbnail">
+                <div class="containerImg">
+
+                  <!-- <img class="media-object img" src="data:{{user.userImages[0]?.contentType}};base64,{{user.userImages[0]?.content}}"> -->
+                  <img class="img-responsive" style="cursor: pointer"
+                       src="{{ url + '/displayImageUser/' + user.userImages[0]?.id}}" alt=""
+                  />
+                  <div [hidden]="user.userImages[0]?.id == null" class="overlay" style="cursor: pointer"
+                       (click)="DeleteImage(user.userImages[0]?.id)">
+                    <div class="text">
+                      <p>ลบรูปภาพ</p>
+                    </div>
+                  </div>
+
+                  <form *ngIf="user.userImages[0]?.id == null" (ngSubmit)="upload(user.id)">
+                    <div class="row">
+                      <div class="col-sm-2" *ngIf="user.userImages[0]?.id == null">
+                        <div>
+                          <input class="btn btn-danger btn-md" type="file" #fileInput/>
+                          <button type="button" class="btn btn-danger" (click)="upload(user.id)">Upload</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!--<input *ngIf="user.userImages[0]?.id == null" style="width: 250px;" class="btn btn-default"-->
+                  <!--type="file" ng2FileSelect [uploader]="uploaderImage" accept="image/*"/>-->
+                  <!--<div class="col-md-12" style="margin-bottom: 5px">-->
+
+                  <!--<table class="table">-->
+                  <!--<thead>-->
+                  <!--<tr>-->
+                  <!--&lt;!&ndash; <th>Progress</th>-->
+                  <!--<th>Status</th> &ndash;&gt;-->
+                  <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<br>-->
+                  <!--<tbody>-->
+                  <!--<tr *ngFor="let item of uploaderImage.queue">-->
+                  <!--&lt;!&ndash; <td><strong>{{ item?.file?.name }}</strong></td> &ndash;&gt;-->
+                  <!--<td *ngIf="uploaderImage.isHTML5" nowrap>{{ item?.file?.size/1024/1024/1024 | number:'.3' }} MB-->
+                  <!--</td>-->
+                  <!--<td *ngIf="uploaderImage.isHTML5">-->
+                  <!--<div class="progress" style="margin-bottom: 0;">-->
+                  <!--<div class="progress-bar" role="progressbar"-->
+                  <!--[ngStyle]="{ 'width': item.progress + '%' }"></div>-->
+                  <!--</div>-->
+                  <!--</td>-->
+                  <!--<td>-->
+                  <!--Queue progress:-->
+                  <!--<div class="progress">-->
+                  <!--<div class="progress-bar" role="progressbar"-->
+                  <!--[ngStyle]="{ 'width': uploaderImage.progress + '%' }"></div>-->
+                  <!--</div>-->
+                  <!--</td>-->
+                  <!--<td class="text-center">-->
+                  <!--<span *ngIf="item.isSuccess">-->
+                  <!--<i class="glyphicon glyphicon-ok"></i>-->
+                  <!--</span>-->
+                  <!--<span *ngIf="item.isError">-->
+                  <!--<i class="glyphicon glyphicon-remove"></i>-->
+                  <!--</span>-->
+                  <!--</td>-->
+                  <!--<td nowrap>-->
+                  <!--<button type="button" class="btn btn-success btn-xs" (click)="item.upload()"-->
+                  <!--[disabled]="item.isReady || item.isUploading || item.isSuccess">-->
+                  <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
+                  <!--</button>-->
+                  <!--<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">-->
+                  <!--<span class="glyphicon glyphicon-trash"></span> Remove-->
+                  <!--</button>-->
+                  <!--</td>-->
+                  <!--</tr>-->
+                  <!--</tbody>-->
+                  <!--</table>-->
+
+                  <!--</div>-->
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="media-body">
+              <h4 *ngIf="editUserShow" class="media-heading">{{user.firstName}}</h4>
+              <p *ngIf="editUserShow">{{user.email}}</p>
+              <div class="form-group">
+                <h4 *ngIf="editShow" class="media-heading">
+                  <input class="form-control" name="firstName" id="firstName" placeholder="firstName"
+                         [(ngModel)]="user.firstName" #firstName="ngModel"
+                         required/>
+                </h4>
+              </div>
+
+              <div class="form-group">
+                <p *ngIf="editShow">
+                  <input class="form-control" name="email" id="email" placeholder="email" [(ngModel)]="user.email"
+                         #email="ngModel" required/>
+                </p>
+              </div>
+
+              <p>
+                <span class="label label-info">17 โปรเจค</span>
+                <span class="label label-warning">150 ผู้ติดตาม</span>
+              </p>
+              <p>
+                <a href="#" class="btn btn-xs btn-default">
+                  <span class="glyphicon glyphicon-comment"></span> ส่งข้อความ</a>
+                <a href="#" class="btn btn-xs btn-default">
+                  <span class="glyphicon glyphicon-heart"></span> ติดตาม</a>
+              </p>
+              <p *ngIf="editUserShow" style="font-family: 'Kanit', sans-serif; font-size: 14px">
+                {{user.instructorBio}}
+              </p>
+              <textarea class="form-control" *ngIf="editShow" rows="8" style="width: 100%" name="instructorBio"
+                        [(ngModel)]="user.instructorBio"
+                        #instructorBio="ngModel">
+                  </textarea>
+            </div>
+            <div style="padding: 2%">
+              <button *ngIf="editShow" type="submit" class="btn btn-danger btn-md"
+                      (click)="update(getUserId, user.firstName, user.email, user.instructorBio)">บันทึก
+              </button>
+              <button *ngIf="editShow" type="submit" class="btn btn-danger btn-md" (click)="out()">ออก</button>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="media-body">
+              <p (click)="editUser()">
+                <span class="fa fa-cog fa-lg pull-right" style="padding: 5px; cursor: pointer"
+                      title="แก้ไขโปรไฟล์"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<alert></alert>

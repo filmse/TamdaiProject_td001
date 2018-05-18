@@ -1,0 +1,240 @@
+<app-header></app-header>
+<div class="container-fluid design">
+  <div class="container-default">
+    <!--*ngFor="let course of courses"-->
+    <!--*ngIf="course.id == CourseId"-->
+    <!--{{course.id}}-->
+
+    <form (ngSubmit)="edit(Course.id)">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+          <div class="col-lg-4">
+            <div class="form-group">
+              <p>Course Expired: </p>
+              <input type="text" class="form-control" name="expired" id="expired"
+                     placeholder="Course Expired example: 24 days" [(ngModel)]="Course.courseAge"
+                     #courseAge="ngModel" required/>
+            </div>
+            <div class="form-group">
+              <p>Course Name: </p>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Course Name.."
+                     [(ngModel)]="Course.name" #name="ngModel"
+                     required/>
+            </div>
+            <div class="form-group">
+              <p>Course Description: </p>
+              <textarea maxlength="2000" style="width: 100%; height: 250px" class="form-control" name="description"
+                        id="description" placeholder="Course description.."
+                        [(ngModel)]="Course.description" #description="ngModel"></textarea>
+            </div>
+            <div class="form-group">
+              <p>Course Price: </p>
+              <input type="number" class="form-control" name="price" id="price" placeholder="Course Price.."
+                     [(ngModel)]="Course.price"
+                     #price="ngModel" required/>
+            </div>
+
+            <!-- <div class="form-group input-group">
+              <span class="input-group-addon">
+                <i class="glyphicon glyphicon-list-alt" style="cursor: pointer" title="Date"></i>
+              </span>
+              <input [(ngModel)]="Course.dateCreateCourse" style="height: 50px" name="dateCreateCourse"  #dateCreateCourse="ngModel"
+                class="form-control" type="date" required/>
+            </div> -->
+
+            <div class="form-group">
+              <p>Course Link: </p>
+              <input type="text" class="form-control" name="linkCourse" id="linkCourse" placeholder="Link Course.."
+                     [(ngModel)]="Course.linkCourse"
+                     #linkCourse="ngModel" required/>
+            </div>
+
+            <div class="checkbox form-group" align="left">
+              <span>
+                <label>
+                  <input [checked]="Course.publicCourse == textTrue" type="checkbox" value="publicCourse"
+                         [(ngModel)]="Course.publicCourse"
+                         #publicCourse="ngModel" name="publicCourse" id="publicCourse">public</label>
+                : {{Course.publicCourse}}</span>
+            </div>
+
+            <div class="form-group">
+              {{Course.courseType}}
+              <div *ngFor="let TypeItem of TypeItems">
+                <input type="checkbox" name="option" (click)="model.options = TypeItem"
+                       [checked]="TypeItem === model.options"> {{TypeItem}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Catagory = </label>
+              {{Course.catagory}}
+              <div *ngFor="let CatagoriesItem of CatagoriesItems">
+                <input type="radio" name="options" (click)="models.options = CatagoriesItem"
+                       [checked]="CatagoriesItem === models.options"> {{CatagoriesItem}}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button name="edit1Button" class="btn btn-primary btn-md" style="width: 150px">Edit</button>
+            </div>
+            <alert class="col-lg-12">
+              <div class="alert alert-success">Registration successful
+              </div>
+            </alert>
+          </div>
+
+          <div class="col-sm-8">
+            <form *ngIf="Course.imageCourses[0]?.id == null" (ngSubmit)="upload(Course.id)">
+              <div class="row">
+                <div class="col-sm-2" *ngIf="Course.imageCourses[0]?.id == null">
+                  <div>
+                    <input class="btn btn-danger btn-md" type="file" #fileInput/>
+                    <button type="button" class="btn btn-danger" (click)="upload(Course.id)">Upload</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-sm-8">
+            <div>
+              <div style="width: 400px">
+                <button name="deleteImgButton" *ngIf="Course.imageCourses[0]?.id != null" class="btn btn-sm btn-danger"
+                        (click)="deleteImage(Course.imageCourses[0]?.id)">
+                  <span>Delete Image</span>
+                </button>
+
+                <img class="img-responsive" style="cursor: pointer"
+                     src="{{ url + '/displayImage/' + Course.imageCourses[0]?.id}}" alt=""
+                />
+
+                <!--&lt;!&ndash;<img class="img-responsive"&ndash;&gt;-->
+                <!--&lt;!&ndash;src="data:{{Course.courseImages[0]?.contentType}};base64,{{Course.courseImages[0]?.content}}"&ndash;&gt;-->
+                <!--&lt;!&ndash;alt=""/>&ndash;&gt;-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div *ngIf="Course.imageCourses[0]?.id == null">-->
+                <!--<br>-->
+                <!--<input class="btn btn-default" type="file" ng2FileSelect [uploader]="uploaderImage" accept="image/*"/>-->
+                <!--<table class="table" style="width: 50%">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th width="50%">Name</th>-->
+                <!--<th>Status</th>-->
+                <!--<th>Progress</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr *ngFor="let item of uploaderImage.queue">-->
+                <!--<td>-->
+                <!--<strong>{{ item?.file?.name }}</strong>-->
+                <!--</td>-->
+                <!--<td *ngIf="uploaderImage.isHTML5" nowrap>{{ item?.file?.size/1024/1024/1024 | number:'.3' }} MB-->
+                <!--</td>-->
+                <!--<td *ngIf="uploaderImage.isHTML5">-->
+                <!--<div class="progress" style="margin-bottom: 0;">-->
+                <!--<div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>-->
+                <!--</div>-->
+                <!--</td>-->
+                <!--<td class="text-center">-->
+                <!--<span *ngIf="item.isSuccess">-->
+                <!--<i class="glyphicon glyphicon-ok"></i>-->
+                <!--</span>-->
+                <!--<span *ngIf="item.isCancel">-->
+                <!--<i class="glyphicon glyphicon-ban-circle"></i>-->
+                <!--</span>-->
+                <!--<span *ngIf="item.isError">-->
+                <!--<i class="glyphicon glyphicon-remove"></i>-->
+                <!--</span>-->
+                <!--</td>-->
+                <!--<td nowrap>-->
+                <!--<button type="button" class="btn btn-success btn-xs" (click)="item.upload()"-->
+                <!--[disabled]="item.isReady || item.isUploading || item.isSuccess">-->
+                <!--<span class="glyphicon glyphicon-upload"></span> Upload-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-warning btn-xs" (click)="item.cancel()"-->
+                <!--[disabled]="!item.isUploading">-->
+                <!--<span class="glyphicon glyphicon-ban-circle"></span> Cancel-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-danger btn-xs" (click)="item.remove()">-->
+                <!--<span class="glyphicon glyphicon-trash"></span> Remove-->
+                <!--</button>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--<div>-->
+                <!--<div>-->
+                <!--Queue progress:-->
+                <!--<div class="progress">-->
+                <!--<div class="progress-bar" role="progressbar"-->
+                <!--[ngStyle]="{ 'width': uploaderImage.progress + '%' }"></div>-->
+                <!--</div>-->
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <nav class="navbar navbar-default bg-faded">
+        <span class="navbar-text">
+          <button class="btn btn-success btn-md" (click)="CreateVideo()">
+            <span class="glyphicon glyphicon-plus"></span> Add Video</button>
+          <button class="btn btn-success btn-md" (click)="CreateImage()">
+            <span class="glyphicon glyphicon-plus"></span> Add Image</button>
+          <button class="btn btn-success btn-md" (click)="CreateText()">
+            <span class="glyphicon glyphicon-plus"></span> Add Text</button>
+        </span>
+      </nav>
+      <nav class="navbar navbar-default bg-faded">
+        <div class="container-fluid">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Order</th>
+              <th>Type</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Public/Private</th>
+              <!--<th>Edit CourseItem</th>-->
+              <!--<th>Edit CourseItem</th>-->
+              <th>Edit/Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr *ngFor="let courseItem of Course?.courseItems; let i = index">-->
+            <tr *ngFor="let courseItem of Course?.courseItems | sortBy : 'id'; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{courseItem.orderItem}}</td>
+              <td>{{courseItem.courseType}}</td>
+              <td>{{courseItem.name}}</td>
+              <td>{{courseItem.description}}</td>
+              <td>{{courseItem.canPreview}}</td>
+              <!--<td *ngIf="courseItem.courseType == imageType">{{courseItem.imageItems[0]?.id}}</td>-->
+              <!--<td *ngIf="courseItem.courseType == videoType">{{courseItem.videosItems[0]?.id}}</td>-->
+              <td>
+                <button name="edit2Button" class="btn btn-warning btn-md" (click)="EditItem(courseItem.id)">
+                  Edit Course
+                </button>
+                <button name="delete2Button" class="btn btn-danger btn-md" (click)="DeleteItem(courseItem.id)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </nav>
+
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

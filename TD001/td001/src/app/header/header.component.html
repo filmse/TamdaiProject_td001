@@ -1,0 +1,78 @@
+<nav class="navbar navbar-default">
+
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+      aria-expanded="false">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <div class="navbar-brand imgClass">
+      <img alt="Logo" class="img-in-class" (click)="home()" disabled [src]="ImgLogo" style="cursor: pointer">
+    </div>
+  </div>
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input (keydown)="keyDownFunction($event)" [(ngModel)]="SearchAdvance.Pname" name="Pname" #Pname="ngModel" placeholder="ค้นหาโปรเจคเรียน"
+          type="text" class="form-control" placeholder="Search">
+      </div>
+      <button type="submit" class="btn btn-default" (click)="Search()">Search</button>
+    </form>
+    <ul class="nav navbar-nav navbar-right">
+      <li *ngIf="!show">
+        <a title="แต้ม">
+          <span class="fa fa-bitcoin"></span> {{users.balance}}</a>
+      </li>
+      <li *ngIf="!show">
+        <a style="cursor: pointer">
+          <span class="fa fa-bell-o" title="แจ้งเตือน"></span>
+        </a>
+      </li>
+      <li *ngIf="show">
+        <a href="#" data-toggle="modal" data-target="#squarespaceModalLogin">เข้าสู่ระบบ</a>
+      </li>
+      <li *ngIf="show">
+        <a href="#" data-toggle="modal" data-target="#squarespaceModalSignUp">สมัครสมาชิก</a>
+      </li>
+      <li class="dropdown" *ngIf="!show">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{users.firstName}}
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a style="cursor: pointer" (click)="profile(users.id)">
+              <span class="fa fa-user"></span> ดูโปรไฟล์ของฉัน
+              <span></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" [routerLink]="['/topUpOnline']">เติมแต้ม</a>
+          </li>
+          <li>
+            <a href="#">โปรเจคของฉัน</a>
+          </li>
+          <li>
+            <a href="#" [routerLink]="['/CourseHistory']">โปรเจคที่ซื้อแล้ว</a>
+          </li>
+          <li>
+            <a href="#" [routerLink]="['/Favor']">โปรเจคที่ชื่นชอบ</a>
+          </li>
+          <li role="separator" class="divider"></li>
+          <li *ngIf="!show">
+            <a href="#" (click)="logOut()">
+              <span class="fa fa-sign-out"></span> ออกจากระบบ</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+
+<app-loginpage></app-loginpage>
+<app-signuppage></app-signuppage>

@@ -1,0 +1,21 @@
+<app-header></app-header>
+<div class="container-fluid contain">
+
+  <div *ngIf="nullShow">
+    <app-course-customer></app-course-customer>
+  </div>
+  <div *ngIf="activeShow">
+    <app-course-member></app-course-member>
+  </div>
+  <div *ngIf="instructorShow">
+    <app-course-ins></app-course-ins>
+  </div>
+  <div *ngIf="adminShow">
+    <app-course-admin></app-course-admin>
+  </div>
+</div>
+
+<div style="margin-top: -200px;">
+  <app-footer></app-footer>
+</div>
+

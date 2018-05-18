@@ -1,0 +1,28 @@
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Username</th>
+      <th>Point</th>
+      <th>Money</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr [hidden]="orderPayments == undefined" *ngFor="let orderPayment of orderPayments">
+      <td>{{orderPayment.id}}</td>
+      <td>{{orderPayment.userId}}</td>
+      <td>{{orderPayment.point}}</td>
+      <td>{{orderPayment.money}}</td>
+      <td *ngIf="orderPayment.status == '1' ">{{confirm}}</td>
+      <td *ngIf="orderPayment.status == '2' " style="color: red">{{WConfirm}}</td>
+      <td *ngIf="orderPayment.status == '3' " style="color: darkgreen">{{SConfirm}}</td>
+      <td>
+        <button *ngIf="orderPayment.status == '1'" class="btn btn-primary" (click)="confirmClick(orderPayment.id)">ยืนยันการชำระเงิน</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
